@@ -4,7 +4,7 @@ function initMap() {
 
 	// Create a map object and specify the DOM element for display.
 	window.mapObj = new google.maps.Map(document.getElementById('map'), {
-		center: {lat: 44.07105, lng: 7.22092},
+		center: {lat: 45.468599, lng: 6.870467},
 		zoom: 14,
 		mapTypeId: 'terrain',
 		fullscreenControl: false,
@@ -19,17 +19,16 @@ function initMap() {
 	// Draw on map
 	drawOnMap();
 
+	google.maps.event.addListener(mapObj, 'tilesloaded', function(evt) {
+		let tilesLoadedElm = document.getElementById('tilesLoaded');
+		if (!tilesLoadedElm) {
+			let elm = document.createElement('div');
+			elm.id = "tilesLoaded";
+			document.body.appendChild(elm);
+		}
+	});
 
-	window.setTimeout(()=> {
-		[
-			...document.getElementsByClassName('gmnoprint'),
-			...document.getElementsByClassName('gm-style-cc')
-		].forEach( elm => elm.remove());
-
-		document.querySelector("#map > div > div > div:nth-child(3)").remove();
-	},2000);
-
-
+	document.addEventListener('loaded', () => console.log("load"));
 
 	function drawOnMap() {
 		window.landmarks = window.landmarks.filter( landmark => landmark.typeInteger === 3);

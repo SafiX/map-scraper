@@ -4,9 +4,11 @@ function initMap() {
 
 	// Create a map object and specify the DOM element for display.
 	window.mapObj = new google.maps.Map(document.getElementById('map'), {
-		center: {lat: 45.468599, lng: 6.870467},
-		zoom: 14,
-		mapTypeId: 'terrain',
+		//tignes center: {lat: 45.468599, lng: 6.870467},
+		center: {lat: 46.214884, lng:6.081947}, //geneva
+		zoom: 12,
+		mapTypeId: google.maps.MapTypeId.TERRAIN,
+		//mapTypeId: google.maps.MapTypeId.SATELLITE,
 		fullscreenControl: false,
 		mapTypeControl: false,
 		panControl: false,
@@ -52,7 +54,7 @@ function initMap() {
 				geodesic: true,
 				strokeColor: '#000000',
 				strokeOpacity: 0.6,
-				strokeWeight: 2
+				strokeWeight: 15
 			}
 		}
 	}

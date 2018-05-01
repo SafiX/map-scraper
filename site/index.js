@@ -6,7 +6,7 @@ function initMap() {
 	window.mapObj = new google.maps.Map(document.getElementById('map'), {
 		//tignes center: {lat: 45.468599, lng: 6.870467},
 		center: {lat: 46.214884, lng:6.081947}, //geneva
-		zoom: 12,
+		zoom: 16,
 		mapTypeId: google.maps.MapTypeId.TERRAIN,
 		//mapTypeId: google.maps.MapTypeId.SATELLITE,
 		fullscreenControl: false,

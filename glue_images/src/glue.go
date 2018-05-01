@@ -70,10 +70,6 @@ func main() {
 
 	imageFilesNames := FilterFiles(allFilesInDirectory)
 
-	for _, f := range imageFilesNames {
-		fmt.Println(f)
-	}
-
 	list := imageInfo.ImageInfoList{}
 	list.InitList(imageFilesNames, sourceImagesPath)
 
@@ -84,6 +80,7 @@ func main() {
 	rgba := image.NewRGBA(r)
 
 	for i :=0; i < list.NumberOfImages ; i++ {
+		fmt.Printf("drawing %v, %v\n", list.List[i].XLocation, list.List[i].YLocation)
 		draw.Draw(rgba, list.List[i].Rect, list.List[i].Img, image.Point{0, 0}, draw.Src)
 	}
 

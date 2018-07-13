@@ -1,8 +1,6 @@
 package imageInfo
 
 import (
-//	"strings"
-	//"strconv"
 	"fmt"
 )
 
@@ -34,8 +32,6 @@ func (imgInfoList *ImageInfoList) InitList(fileNames []string, sourceImagesPath 
 		imgInfoList.List[i].Img = img
 		imgInfoList.List[i].SP = imgInfoList.List[i].SetSP(1280)
 		imgInfoList.List[i].Rect = imgInfoList.List[i].SetRect(imgInfoList.List[i].SP)
-
-		//imageInfoList[i].Pixels = imageInfoList[i].DecodePixelsFromImage(imageInfoList[i].XLocation * IMAGE_SIZE,imageInfoList[i].YLocation * IMAGE_SIZE)
 
 	}
 }

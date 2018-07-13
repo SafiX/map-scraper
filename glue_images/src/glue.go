@@ -2,25 +2,12 @@ package main
 
 import (
 	"fmt"
-	//"image"
 	_ "image/draw"
 	"os"
 	_ "image/png"
-	//"image/color"
 	"path/filepath"
-	//"image/draw"
-	//"image/png"
 	"io/ioutil"
-	//"log"
-	//"strconv"
-	//"strconv"
-	//"strings"
-	//"./imageInfo"
 	"imageInfo"
-	//"reflect"
-//	"image"
-	//"image/draw"
-//	"image/draw"
 	"image"
 	"image/draw"
 	"image/png"
@@ -55,6 +42,9 @@ func FilterFiles(files []os.FileInfo) (filteredFilesNames []string) {
 
 
 func main() {
+
+	// get the path for images.
+	// good enough for development
 	pwd, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -68,12 +58,11 @@ func main() {
 		panic(err)
 	}
 
+	// filter unwanted OS files
 	imageFilesNames := FilterFiles(allFilesInDirectory)
 
 	list := imageInfo.ImageInfoList{}
 	list.InitList(imageFilesNames, sourceImagesPath)
-
-
 
 	//rectangle for the big image
 	r := image.Rectangle{image.Point{0, 0}, image.Point{list.NumberOfXImages * IMAGE_SIZE, list.NumberOfYImages * IMAGE_SIZE}}
@@ -83,8 +72,6 @@ func main() {
 		fmt.Printf("drawing %v, %v\n", list.List[i].XLocation, list.List[i].YLocation)
 		draw.Draw(rgba, list.List[i].Rect, list.List[i].Img, image.Point{0, 0}, draw.Src)
 	}
-
-
 
 
 	// Create a new file and write to it
@@ -101,149 +88,3 @@ func main() {
 
 
 }
-
-
-
-
-
-
-
-//for i := 0; i < len(imageInfoList); i++  {
-//	fmt.Println(imageInfoList[i].Rect)
-//}
-
-
-//
-//// Create a new file and write to it
-//out, err := os.Create("./output.png")
-//if err != nil {
-//	panic(err)
-//	os.Exit(1)
-//}
-//err = png.Encode(out, rgba)
-//if err != nil {
-//	panic(err)
-//	os.Exit(1)
-//}
-
-//newRect := image.Rectangle{
-//	Min: image.Point{0,0},
-//	Max: image.Point{
-//		X: numberOfImages * IMAGE_SIZE,
-//		Y: numberOfImages * IMAGE_SIZE,
-//	},
-//}
-//
-//finImage := image.NewRGBA(newRect)
-//// This is the cool part, all you have to do is loop through
-//// each Pixel and set the image's color on the go
-//for _, px := range pixelSum {
-//	finImage.Set(
-//		px.Point.X,
-//		px.Point.Y,
-//		px.Color,
-//	)
-//}
-//draw.Draw(finImage, finImage.Bounds(), finImage, image.Point{0, 0}, draw.Src)
-//
-//// Create a new file and write to it
-//out, err := os.Create("./output.png")
-//if err != nil {
-//	panic(err)
-//	os.Exit(1)
-//}
-
-//img1, _, err := imageInfo.OpenAndDecode(sourceImagesPath + "1_1.png")
-//if err != nil {
-//	panic(err)
-//}
-//
-//imgInfo1 := imageInfo.ImageInfo{
-//	FileName : "0_1.png",
-//	XLocation : 0,
-//	YLocation : 0,
-//	Img : img1,
-//}
-////imgInfo1.xLocation, imgInfo1.yLocation = imgInfo1.setXYLocation()
-//imgInfo1.XLocation, imgInfo1.YLocation = imgInfo1.SetXYLocation()
-//fmt.Println(imgInfo1.YLocation)
-
-//img1, _, err := OpenAndDecode(sourceImagesPath + "1_1.png")
-//if err != nil {
-//	panic(err)
-//}
-//img2, _, err := OpenAndDecode(sourceImagesPath + "1_2.png")
-//if err != nil {
-//	panic(err)
-//}
-//
-//
-//// collect pixel data from each image
-//// first image
-//pixels1 := DecodePixelsFromImage(img1, 0, 0)
-//
-//// the second image has a Y-offset of img1's max Y (appended at bottom)
-//pixels2 := DecodePixelsFromImage(img2, img1.Bounds().Max.X, 0)
-//pixelSum := append(pixels1, pixels2...)
-//
-//// Set a new size for the new image equal to the max width
-//// of bigger image and max height of two images combined
-//newRect := image.Rectangle{
-//	Min: img1.Bounds().Min,
-//	Max: image.Point{
-//		X: img2.Bounds().Max.X + img1.Bounds().Max.X,
-//		Y: img2.Bounds().Max.Y,
-//	},
-//}
-//finImage := image.NewRGBA(newRect)
-//// This is the cool part, all you have to do is loop through
-//// each Pixel and set the image's color on the go
-//for _, px := range pixelSum {
-//	finImage.Set(
-//		px.Point.X,
-//		px.Point.Y,
-//		px.Color,
-//	)
-//}
-//draw.Draw(finImage, finImage.Bounds(), finImage, image.Point{0, 0}, draw.Src)
-//
-//// Create a new file and write to it
-//out, err := os.Create("./output.png")
-//if err != nil {
-//	panic(err)
-//	os.Exit(1)
-//}
-//err = png.Encode(out, finImage)
-//if err != nil {
-//	panic(err)
-//	os.Exit(1)
-//}
-//--------------working ------------
-//pixels1 := DecodePixelsFromImage(imageInfoList[0].Img, 0, 0)
-//
-//// the second image has a Y-offset of img1's max Y (appended at bottom)
-//pixels2 := DecodePixelsFromImage(imageInfoList[1].Img, IMAGE_SIZE, 0)
-//pixelSum := append(pixels1, pixels2...)
-//
-//// Set a new size for the new image equal to the max width
-//// of bigger image and max height of two images combined
-//newRect := image.Rectangle{
-//	Min: image.Point{0,0},
-//	Max: image.Point{
-//		X: IMAGE_SIZE * 2,
-//		Y: IMAGE_SIZE,
-//	},
-//}
-//finImage := image.NewRGBA(newRect)
-//// This is the cool part, all you have to do is loop through
-//// each Pixel and set the image's color on the go
-//for _, px := range pixelSum {
-//	finImage.Set(
-//		px.Point.X,
-//		px.Point.Y,
-//		px.Color,
-//	)
-//}
-//draw.Draw(finImage, finImage.Bounds(), finImage, image.Point{0, 0}, draw.Src)
-//
-//---------------------------------------

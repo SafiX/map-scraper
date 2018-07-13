@@ -7,13 +7,13 @@ const VIEW_WIDTH = 1280;
 
 
 const STARTING_POINT_NORTH_WEST = {
-	lat: 47.421746, // Y
-	lng: 8.401886 // X
+	lat: 47.982595, // Y
+	lng:  5.363191 // X
 };
 
 const ENDING_POINT_SOUTH_EAST = {
-	lat: 47.377031, // Y
-	lng: 8.541654 // X
+	lat: 43.653425, // Y
+	lng: 16.036657 // X
 };
 
 
@@ -56,6 +56,7 @@ const ENDING_POINT_SOUTH_EAST = {
 	let iterations = await page.evaluate(calculateIterations, STARTING_POINT_NORTH_WEST, ENDING_POINT_SOUTH_EAST);
 
 
+	console.log(iterations.x + "," + iterations.y);
 	for (let i = 0; i < iterations.y + 1; i++) {
 		for (let j = 0; j < iterations.x; j++) {
 			let cropInfo = await page.evaluate(getBoundsInfo);
@@ -83,30 +84,6 @@ const ENDING_POINT_SOUTH_EAST = {
 	}
 
 
-	//for (let i = 1, y = 0 ; i === 0 ; i ++, y++) {
-	//	for (let j = 1, x = 0 ; j === 0 ; j ++, x++) {
-	//
-	//		let cropInfo = await page.evaluate(getBoundsInfo);
-	//		let fileName = `${y}_${x}`;
-	//		let logOjb = {
-	//			file_name: fileName,
-	//			NE_lat: cropInfo.bounds.NE.lat,
-	//			NE_lng: cropInfo.bounds.NE.lng,
-	//			SW_lat: cropInfo.bounds.SW.lat,
-	//			SW_lng: cropInfo.bounds.SW.lng,
-	//			center_lat: cropInfo.center.lat,
-	//			center_lng: cropInfo.center.lng,
-	//			length_distance_km: Math.round(cropInfo.length) / 1000
-	//		};
-	//		csvStream.write(logOjb);
-	//
-	//		await takeScreenShot(fileName);
-	//		console.log(`done ${fileName}, NE - ${logOjb.NE_lng} , ${logOjb.NE_lat} -> SE ${logOjb.SW_lng} ,
-	// ${logOjb.SW_lat}`) await page.evaluate(panByPixels, {x: VIEW_WIDTH, y: 0}); await page.waitFor('#tilesLoaded');
-	// let islastLng = await page.evaluate(getIslastLng, ENDING_POINT_SOUTH_EAST.lng); if (isLastLng) { j = -1; } }
-	// islastPosition = await page.evaluate(getIslastPoint, ENDING_POINT_SOUTH_EAST);  await page.evaluate(panByPixels,
-	// {x: -VIEW_WIDTH * 3, y: VIEW_WIDTH}); await page.waitFor('#tilesLoaded'); }
-
 	csvStream.end();
 
 	async function takeScreenShot(fileName) {
@@ -129,9 +106,9 @@ const ENDING_POINT_SOUTH_EAST = {
 })();
 
 
-function calculateIterations(startNW, endSE) {
-	startNW = new google.maps.LatLng(startNW);
-	endSE = new google.maps.LatLng(endSE);
+function calculateIterations(sNW, eSE) {
+	let startNW = new google.maps.LatLng(sNW);
+	let endSE = new google.maps.LatLng(eSE);
 	let d = google.maps.geometry.spherical.computeDistanceBetween;
 	let xCropDistance = d(mapObj.getBounds().getNorthEast(), new google.maps.LatLng({
 		lat: mapObj.getBounds().getNorthEast().lat(),
@@ -246,11 +223,12 @@ function removeExtraImages() {
 async function goToStartPosition(STARTING_POINT_NORTH_WEST, page) {
 	// get current map bounds
 	let cropInfo = await page.evaluate(getBoundsInfo);
+	let startingPointNorthWest = Object.assign({}, STARTING_POINT_NORTH_WEST)
 
 	// calculate center of starting point
 	let center = {
-		lat: STARTING_POINT_NORTH_WEST.lat += (cropInfo.bounds.SW.lat - cropInfo.bounds.NE.lat) / 2,
-		lng: STARTING_POINT_NORTH_WEST.lng += (cropInfo.bounds.NE.lng - cropInfo.bounds.SW.lng) / 2
+		lat: startingPointNorthWest.lat += (cropInfo.bounds.SW.lat - cropInfo.bounds.NE.lat) / 2,
+		lng: startingPointNorthWest.lng += (cropInfo.bounds.NE.lng - cropInfo.bounds.SW.lng) / 2
 	};
 
 	console.log(center);
@@ -258,6 +236,7 @@ async function goToStartPosition(STARTING_POINT_NORTH_WEST, page) {
 	await page.evaluate(panByCenterCoords, center);
 	await page.waitFor('#tilesLoaded');
 }
+
 
 
 

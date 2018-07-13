@@ -57,23 +57,3 @@ func  (imgInfo *ImageInfo) OpenAndDecode(filepath string) (image.Image, string, 
 	}
 	return img, format, nil
 }
-
-// Decode image.Image's pixel data into []*Pixel
-func (imgInfo *ImageInfo) DecodePixelsFromImage(offsetX, offsetY int) Pixels {
-	pixels := Pixels{}
-	for y := 0; y <= imgInfo.Img.Bounds().Max.Y; y++ {
-		for x := 0; x <= imgInfo.Img.Bounds().Max.X; x++ {
-			p := &Pixel{
-				Point: image.Point{x + offsetX, y + offsetY},
-				Color: imgInfo.Img.At(x, y),
-			}
-			pixels = append(pixels, p)
-		}
-	}
-	return pixels
-}
-
-// Decode image.Image's pixel data into []*Pixel
-func (imgInfo *ImageInfo) getPixels() []*Pixel {
-	return imgInfo.Pixels
-}

@@ -1,4 +1,4 @@
-# Shmoogle Map Scraper
+# Shmoogle Maps Scraper
 
 Create a photo out of a map. Use Shmoogle api to paint any kind of map or landmark you wish. Simply input a start and end point, and you're all set!
 

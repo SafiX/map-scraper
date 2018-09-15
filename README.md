@@ -1,15 +1,18 @@
 # Shmoogle Map Scraper
 
-Create a large photo. Example - 
+Create a photo out of a map. Use Shmoogle api to paint any kind of map or landmark you wish. Simply input a start and end point, and you're all set!
 
-![](https://preview.ibb.co/kU2qnT/IMG_9417.jpg)
 
+Here's an [example](https://preview.ibb.co/kU2qnT/IMG_9417.jpg) of a 600 Mega Pixel output of the program.
+The current state of the project has the configuration of this example photo. It's the European Alps with more than 2000 landmarks of Ski resorts.
 
 How it works - 
 
-1. Run a local server with Shmoogle Maps API
-2. Run an application that systematically takes screen shots
-3. Glue all images together
+There are 3 parts to the application
+
+1. Run a local server with Shmoogle Maps API (static website hosted locally with Node http-server)
+2. Run an application that systematically takes screen shots (Node using Puppeteer)
+3. Glue all images together (Go application)
 
 
 ### Run a local server with Shmoogle Maps API

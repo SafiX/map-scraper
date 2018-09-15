@@ -6,6 +6,8 @@ Create a photo out of a map. Use Shmoogle api to paint any kind of map or landma
 Here's an [example](https://preview.ibb.co/kU2qnT/IMG_9417.jpg) of a 600 Mega Pixel output of the program.
 The current state of the project has the configuration of this example photo. It's the European Alps with more than 2000 landmarks of Ski resorts.
 
+9 TeraPixel photo? no sweat!  :) :)
+
 How it works - 
 
 There are 3 parts to the application
